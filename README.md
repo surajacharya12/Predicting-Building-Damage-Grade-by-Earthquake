@@ -73,3 +73,53 @@ The code generates the following output files in the Colab environment:
 *   `y_pred_RF.xlsx`: Contains the predictions from the Random Forest Classifier.
 *   `y_pred_Elactic.xlsx`: Contains the predictions from the ElasticNet Regression model.
 *   `y_pred_DT.xlsx`: Contains the predictions from the Decision Tree Regressor.
+
+# Second part of this project Support Vector Regression (SVR) Analysis on Hitters Dataset
+
+This project performs a Support Vector Regression (SVR) analysis on the Hitters dataset to predict player salaries. The analysis follows these steps:
+
+1.  **Load Libraries and Data:**
+    *   Essential libraries for data manipulation, visualization, and machine learning are imported.
+    *   The Hitters dataset is loaded from Google Drive.
+
+2.  **Data Preprocessing:**
+    *   Rows with missing values in the 'Salary' column are removed.
+    *   Categorical features ('League', 'Division', 'NewLeague') are one-hot encoded.
+    *   The original categorical columns and the 'Salary' column are dropped from the feature set (X).
+    *   The target variable (y) is defined as the 'Salary' column.
+
+3.  **Data Splitting:**
+    *   The dataset is split into training and testing sets.
+
+4.  **Model Training (Initial):**
+    *   A Support Vector Regressor with a Radial Basis Function (RBF) kernel is initialized and trained on the training data.
+
+5.  **Model Evaluation (Initial):**
+    *   The model's performance is evaluated on both the training and testing sets using Root Mean Squared Error (RMSE) and R-squared scores.
+
+6.  **Hyperparameter Tuning:**
+    *   A grid search with cross-validation is performed to find the optimal 'C' parameter for the SVR model.
+
+7.  **Model Training (Tuned):**
+    *   An SVR model is trained using the best 'C' parameter found during tuning.
+
+8.  **Model Evaluation (Tuned):**
+    *   The performance of the tuned model is evaluated on the training and testing sets using R-squared scores and RMSE.
+
+## Results
+
+The initial SVR model showed the following performance:
+
+*   **Train RMSE:** {{np.sqrt(mean_squared_error(y_train,SVR_Radial_Basis.predict(X_train)))}}
+*   **Train R-squared:** {{r2_score(y_train,SVR_Radial_Basis.predict(X_train))}}
+*   **Test RMSE:** {{np.sqrt(mean_squared_error(y_test,SVR_Radial_Basis.predict(X_test)))}}
+*   **Test R-squared:** {{r2_score(y_test,SVR_Radial_Basis.predict(X_test))}}
+
+After hyperparameter tuning, the model with the optimal 'C' parameter ({{svr_cv_model.best_params_['C']}}) achieved the following performance:
+
+*   **Tuned Train RMSE:** {{np.sqrt(mean_squared_error(y_train,svr_tuned.predict(X_train)))}}
+*   **Tuned Train R-squared:** {{r2_score(y_train,svr_tuned.predict(X_train))}}
+*   **Tuned Test RMSE:** {{np.sqrt(mean_squared_error(y_test,svr_tuned.predict(X_test)))}}
+*   **Tuned Test R-squared:** {{r2_score(y_test,svr_tuned.predict(X_test))}}
+
+The tuned model shows improved R-squared scores on both the training and testing sets compared to the initial model, indicating a better fit to the data. The test RMSE also decreased after tuning.
